@@ -10,6 +10,7 @@ import android.view.Window
 import android.widget.Button
 import android.widget.RadioButton
 import android.widget.RadioGroup
+import com.example.notes.Util.Util
 
 class Dialogsort(context: Context) : Dialog(context) {
 
@@ -38,8 +39,8 @@ class Dialogsort(context: Context) : Dialog(context) {
         datesort.isChecked=true
         ascendingsort.isChecked=true
         if(sharedPreferences.getBoolean("bool",false)){
-            findViewById<RadioButton>(sharedPreferences.getInt("typeofsort",Util.typeofsort)).isChecked=true
-            findViewById<RadioButton>(sharedPreferences.getInt("orderascordesc",Util.ascordec)).isChecked=true
+            findViewById<RadioButton>(sharedPreferences.getInt("typeofsort", Util.typeofsort)).isChecked=true
+            findViewById<RadioButton>(sharedPreferences.getInt("orderascordesc", Util.ascordec)).isChecked=true
         }
 
 
@@ -52,16 +53,21 @@ class Dialogsort(context: Context) : Dialog(context) {
                 when(typesort)
                 {
                     R.id.titlesort -> { Util.listforadapter.value=1 }
-                    R.id.datesort ->{Util.listforadapter.value=2}
-                    R.id.notesizesort ->{Util.listforadapter.value=3}
+                    R.id.datesort ->{
+                        Util.listforadapter.value=2}
+                    R.id.notesizesort ->{
+                        Util.listforadapter.value=3}
                 }
             }
             else{
                 when(typesort)
                 {
-                    R.id.titlesort -> {Util.listforadapter.value=4}
-                    R.id.datesort ->{Util.listforadapter.value=5}
-                    R.id.notesizesort ->{Util.listforadapter.value=6}
+                    R.id.titlesort -> {
+                        Util.listforadapter.value=4}
+                    R.id.datesort ->{
+                        Util.listforadapter.value=5}
+                    R.id.notesizesort ->{
+                        Util.listforadapter.value=6}
                 }
             }
             editor.putInt("typeofsort",typesort)

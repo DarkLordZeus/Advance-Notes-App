@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.notes.R
-import com.example.notes.Util
+import com.example.notes.Util.Util
 import com.example.notes.databinding.RecyclerviewItemBinding
 import com.example.notes.room.NotesEntity
 
@@ -126,7 +126,8 @@ class Stagerredadapter(val activity: FragmentActivity?, val inrecyclebin: Boolea
             when (item?.getItemId()) {
                 R.id.adapteriddelete -> {
                     if(inrecyclebin)                   //if adapter in rcybinfragment
-                    {Util.deleteinbulkfromrb.value=noteslist }
+                    {
+                        Util.deleteinbulkfromrb.value=noteslist }
                     else{                              //if in home or fav fragment
                         Util.deleteinbulk.value=noteslist}
                     mAreCheckboxesVisible.value = false

@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.notes.Dialogsort
 import com.example.notes.R
-import com.example.notes.Util
+import com.example.notes.Util.Util
 import com.example.notes.adapter.Stagerredadapter
 import com.example.notes.databinding.FragmentHomeBinding
 import com.example.notes.room.NotesEntity

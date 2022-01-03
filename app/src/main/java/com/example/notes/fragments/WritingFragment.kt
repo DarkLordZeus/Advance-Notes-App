@@ -17,8 +17,8 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.notes.R
-import com.example.notes.Util
-import com.example.notes.Util.Companion.isfav
+import com.example.notes.Util.Util
+import com.example.notes.Util.Util.Companion.isfav
 import com.example.notes.databinding.FragmentWritingBinding
 import com.example.notes.room.NotesEntity
 import com.example.notes.room.RoomViewmodel

@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import com.example.notes.R
-import com.example.notes.Util
+import com.example.notes.Util.Util
 import com.example.notes.databinding.FragmentBackgroundcolorBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
