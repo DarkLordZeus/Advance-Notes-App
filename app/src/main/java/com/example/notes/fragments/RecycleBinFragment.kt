@@ -1,22 +1,19 @@
-package com.example.notes
+package com.example.notes.fragments
 
 import android.os.Bundle
 import android.view.*
 import android.widget.TextView
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import com.example.notes.R
+import com.example.notes.Util
 import com.example.notes.adapter.Stagerredadapter
 import com.example.notes.databinding.FragmentRecycleBinBinding
-import com.example.notes.room.NotesEntity
 import com.example.notes.room.RoomViewmodel
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 
 class RecycleBinFragment : Fragment() {
     private var _binding: FragmentRecycleBinBinding?=null
@@ -48,7 +45,10 @@ class RecycleBinFragment : Fragment() {
         })
 
         notesadapter.setOnItemClickListener { it->
-            val action=RecycleBinFragmentDirections.actionRecycleBinFragmentToWritingFragment(it,2)
+            val action=
+                RecycleBinFragmentDirections.actionRecycleBinFragmentToWritingFragment(
+                    it,
+                    2)
             findNavController().navigate(action)
 
         }

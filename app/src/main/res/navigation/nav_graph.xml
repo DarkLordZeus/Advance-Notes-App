@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/writingFragment"
-        android:name="com.example.notes.WritingFragment"
+        android:name="com.example.notes.fragments.WritingFragment"
         android:label=" "
         tools:layout="@layout/fragment_writing" >
         <action
@@ -30,7 +30,7 @@
     </fragment>
     <dialog
         android:id="@+id/backgroundcolor"
-        android:name="com.example.notes.Backgroundcolor"
+        android:name="com.example.notes.fragments.Backgroundcolor"
         android:label="fragment_backgroundcolor"
         tools:layout="@layout/fragment_backgroundcolor"
         >
@@ -40,7 +40,7 @@
     </dialog>
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.example.notes.HomeFragment"
+        android:name="com.example.notes.fragments.HomeFragment"
         android:label="NOTES"
         tools:layout="@layout/fragment_home" >
         <action
@@ -56,7 +56,7 @@
     </fragment>
     <fragment
         android:id="@+id/recycleBinFragment"
-        android:name="com.example.notes.RecycleBinFragment"
+        android:name="com.example.notes.fragments.RecycleBinFragment"
         android:label="Recycle Bin"
         tools:layout="@layout/fragment_recycle_bin" >
         <action
@@ -65,7 +65,7 @@
     </fragment>
     <fragment
         android:id="@+id/favourites_fragment"
-        android:name="com.example.notes.Favourites_fragment"
+        android:name="com.example.notes.fragments.Favourites_fragment"
         android:label="Favourites"
         tools:layout="@layout/fragment_favourites_fragment" >
         <action

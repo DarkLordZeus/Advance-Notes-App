@@ -1,4 +1,4 @@
-package com.example.notes
+package com.example.notes.fragments
 
 import android.content.Context
 import android.os.Bundle
@@ -12,6 +12,9 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import com.example.notes.Dialogsort
+import com.example.notes.R
+import com.example.notes.Util
 import com.example.notes.adapter.Stagerredadapter
 import com.example.notes.databinding.FragmentHomeBinding
 import com.example.notes.room.NotesEntity
@@ -95,12 +98,15 @@ class HomeFragment : Fragment() {
         })
 
         fab.setOnClickListener {
-            val action=HomeFragmentDirections.actionHomeFragmentToWritingFragment(null,0)
+            val action=
+                HomeFragmentDirections.actionHomeFragmentToWritingFragment(null,
+                    0)
             findNavController().navigate(action)
 
         }
         notesadapter.setOnItemClickListener { it->
-            val action=HomeFragmentDirections.actionHomeFragmentToWritingFragment(it,1)
+            val action=
+                HomeFragmentDirections.actionHomeFragmentToWritingFragment(it, 1)
             findNavController().navigate(action)
         }
 
@@ -109,7 +115,7 @@ class HomeFragment : Fragment() {
     private fun setuprecyclerview() {
         notesadapter= Stagerredadapter(activity,false)
         binding.recyclerview.adapter=notesadapter
-        Util.Companion.layoutmanager.observe(viewLifecycleOwner, Observer {
+        Util.layoutmanager.observe(viewLifecycleOwner, Observer {
             when(it)
             {
                 1-> binding.recyclerview.layoutManager=StaggeredGridLayoutManager(2,LinearLayoutManager.VERTICAL)
@@ -134,13 +140,13 @@ class HomeFragment : Fragment() {
                 popupMenu.setOnMenuItemClickListener(PopupMenu.OnMenuItemClickListener { item ->
                     when(item.itemId) {
                         R.id.staglistrv -> {
-                            Util.Companion.layoutmanager.value= 1
+                            Util.layoutmanager.value= 1
                         }
                         R.id.Listrv -> {
-                            Util.Companion.layoutmanager.value= 2
+                            Util.layoutmanager.value= 2
                         }
                         R.id.Grid ->{
-                            Util.Companion.layoutmanager.value= 3
+                            Util.layoutmanager.value= 3
                         }
                     }
                     true
@@ -148,8 +154,9 @@ class HomeFragment : Fragment() {
                 popupMenu.show()
                 return true
             }
-            R.id.search->{
-                val action =HomeFragmentDirections.actionHomeFragmentToSearchFragmnet()
+            R.id.search ->{
+                val action =
+                    HomeFragmentDirections.actionHomeFragmentToSearchFragmnet()
                 findNavController().navigate(action)
                 return true
             }

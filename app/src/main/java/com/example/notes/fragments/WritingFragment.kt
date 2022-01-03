@@ -1,4 +1,4 @@
-package com.example.notes
+package com.example.notes.fragments
 
 
 import android.annotation.SuppressLint
@@ -9,20 +9,19 @@ import android.view.animation.AnimationUtils
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.Toast
-import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.content.ContextCompat
-import androidx.core.view.ViewCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.example.notes.R
+import com.example.notes.Util
 import com.example.notes.Util.Companion.isfav
 import com.example.notes.databinding.FragmentWritingBinding
 import com.example.notes.room.NotesEntity
 import com.example.notes.room.RoomViewmodel
-import com.google.android.material.appbar.AppBarLayout
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
@@ -84,7 +83,7 @@ class WritingFragment : Fragment() {
             binding.floatingActionButton.visibility=View.GONE
         if (args.checkargs == 1 || args.checkargs == 2) {
             setupcolor(args.notesEntity!!.color)
-            Util.Companion.colorbg.value = args.notesEntity!!.color
+            Util.colorbg.value = args.notesEntity!!.color
             textToolHeader.setText(args.notesEntity?.Title)
             binding.edittext1.setText(args.notesEntity?.notes)
             if (args.notesEntity!!.recyclebincount == 2) //is already favourite
@@ -97,7 +96,7 @@ class WritingFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Util.Companion.colorbg.observe(viewLifecycleOwner, Observer { color ->
+        Util.colorbg.observe(viewLifecycleOwner, Observer { color ->
             setupcolor(color)
         })
         isfav.observe(viewLifecycleOwner, Observer {
@@ -159,7 +158,7 @@ class WritingFragment : Fragment() {
                             texttitle,
                             description,
                             datentime,
-                            Util.Companion.colorbg.value!!,2)
+                            Util.colorbg.value!!,2)
                         roommodel.addnote(note)
                         newnote=true
                     }
@@ -170,7 +169,7 @@ class WritingFragment : Fragment() {
                             texttitle,
                             description,
                             datentime,
-                            Util.Companion.colorbg.value!!,if (isfav.value == true) 1 else 2)
+                            Util.colorbg.value!!,if (isfav.value == true) 1 else 2)
                         roommodel.updatenote(note)
                     }
 
@@ -237,7 +236,8 @@ class WritingFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.bgcolor -> {
-                val action = WritingFragmentDirections.actionWritingFragmentToBackgroundcolor()
+                val action =
+                    WritingFragmentDirections.actionWritingFragmentToBackgroundcolor()
                 findNavController().navigate(action)
                 return true
             }
@@ -344,7 +344,7 @@ class WritingFragment : Fragment() {
                         texttitle,
                         description,
                         datentime,
-                        Util.Companion.colorbg.value!!,
+                        Util.colorbg.value!!,
                         args.notesEntity!!.recyclebincount)
                     roommodel.updatenote(note)
                 }
@@ -356,7 +356,7 @@ class WritingFragment : Fragment() {
                         texttitle,
                         description,
                         datentime,
-                        Util.Companion.colorbg.value!!,lsnote.recyclebincount)
+                        Util.colorbg.value!!,lsnote.recyclebincount)
                     roommodel.addnote(note)
                 }
                 else -> {
@@ -365,7 +365,7 @@ class WritingFragment : Fragment() {
                         texttitle,
                         description,
                         datentime,
-                        Util.Companion.colorbg.value!!)
+                        Util.colorbg.value!!)
                     roommodel.addnote(note)
 
                 }
@@ -423,7 +423,7 @@ class WritingFragment : Fragment() {
             ContextCompat.getColor(requireContext(), R.color.toolbargray)
         textToolHeader.text.clear()
         textToolHeader.visibility = View.GONE
-        Util.Companion.colorbg.value = R.color.bgtransparent
+        Util.colorbg.value = R.color.bgtransparent
         applyreadmode(true)
         isfav.value = false
         _binding = null

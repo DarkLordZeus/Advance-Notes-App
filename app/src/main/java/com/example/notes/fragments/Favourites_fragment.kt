@@ -1,4 +1,4 @@
-package com.example.notes
+package com.example.notes.fragments
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -11,6 +11,8 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import com.example.notes.R
+import com.example.notes.Util
 import com.example.notes.adapter.Stagerredadapter
 import com.example.notes.databinding.FragmentFavouritesFragmentBinding
 import com.example.notes.room.NotesEntity
@@ -45,7 +47,10 @@ class Favourites_fragment : Fragment() {
         })
 
         notesadapter.setOnItemClickListener { it->
-            val action=Favourites_fragmentDirections.actionFavouritesFragmentToWritingFragment(it,1)
+            val action=
+                com.example.notes.fragments.Favourites_fragmentDirections.actionFavouritesFragmentToWritingFragment(
+                    it,
+                    1)
             findNavController().navigate(action)
         }
 

@@ -1,4 +1,4 @@
-package com.example.notes
+package com.example.notes.fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,6 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
+import com.example.notes.R
+import com.example.notes.Util
 import com.example.notes.databinding.FragmentBackgroundcolorBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
@@ -33,31 +35,31 @@ class Backgroundcolor : BottomSheetDialogFragment() {
             dismiss()
         }
         binding.COLOURcyangreen.setOnClickListener {
-            Util.Companion.colorbg.value=R.color.bgcyangreen
+            Util.colorbg.value= R.color.bgcyangreen
         }
         binding.COLORgray.setOnClickListener {
-            Util.Companion.colorbg.value=R.color.bggray
+            Util.colorbg.value= R.color.bggray
         }
         binding.COLOURtrans.setOnClickListener {
-            Util.Companion.colorbg.value=R.color.bgtransparent
+            Util.colorbg.value= R.color.bgtransparent
         }
         binding.COLOURorange.setOnClickListener {
-            Util.Companion.colorbg.value=R.color.bgorange
+            Util.colorbg.value= R.color.bgorange
         }
         binding.COLOURyellow.setOnClickListener {
-            Util.Companion.colorbg.value=R.color.bgyellow
+            Util.colorbg.value= R.color.bgyellow
         }
         binding.COLOURblue.setOnClickListener {
-            Util.Companion.colorbg.value=R.color.bgblue
+            Util.colorbg.value= R.color.bgblue
         }
         binding.COLOURpurple.setOnClickListener {
-            Util.Companion.colorbg.value=R.color.bgpurple
+            Util.colorbg.value= R.color.bgpurple
         }
         binding.COLOURpink.setOnClickListener {
-            Util.Companion.colorbg.value=R.color.bgpink
+            Util.colorbg.value= R.color.bgpink
         }
-        Util.Companion.colorbg.observe(viewLifecycleOwner, Observer { color->
-            binding.done.setTextColor(ContextCompat.getColor(requireContext(),Util.Companion.colorbg.value!! ))
+        Util.colorbg.observe(viewLifecycleOwner, Observer { color->
+            binding.done.setTextColor(ContextCompat.getColor(requireContext(), Util.colorbg.value!! ))
         })
 
     }
