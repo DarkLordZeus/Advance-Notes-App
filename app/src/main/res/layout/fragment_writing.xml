@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/constraintlayoutwriting"
+    android:nestedScrollingEnabled="false"
+    tools:context=".WritingFragment"
+    >
+
+
+    <ScrollView
+        android:id="@+id/scrollView2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbarThumbVertical="@drawable/scroll_bar"
+        android:fillViewport="true"
+        android:overScrollMode="never"
+        android:scrollbarFadeDuration="@integer/material_motion_duration_medium_1"
+
+        android:scrollbarStyle="insideOverlay"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:background="@color/gray"
+            android:orientation="vertical"
+            android:weightSum="1">
+
+            <EditText
+                android:id="@+id/edittext1"
+                android:layout_width="match_parent"
+                android:layout_height="600dp"
+                android:layout_gravity="top"
+                android:background="@color/white"
+                android:gravity="top"
+                android:padding="16dp"
+
+
+                />
+
+            <EditText
+                android:id="@+id/edittext2"
+                android:layout_width="match_parent"
+                android:layout_height="600dp"
+                android:layout_marginTop="4dp"
+                android:background="@color/white"
+                android:gravity="top"
+                android:padding="16dp" />
+
+            <EditText
+                android:id="@+id/edittext3"
+                android:layout_width="match_parent"
+                android:layout_height="600dp"
+                android:layout_marginTop="4dp"
+                android:background="@color/white"
+                android:gravity="top"
+                android:padding="16dp" />
+
+
+        </LinearLayout>
+
+    </ScrollView>
+
+
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/floatingActionButton"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:layout_marginRight="32dp"
+        android:layout_marginBottom="64dp"
+        android:clickable="true"
+        android:elevation="8dp"
+        android:src="@drawable/expand"
+        app:backgroundTint="#FF8300"
+        app:layout_constraintBottom_toBottomOf="@id/constraintlayoutwriting"
+        app:layout_constraintEnd_toEndOf="@id/constraintlayoutwriting"
+        app:maxImageSize="32dp"
+        app:tint="#9C000000"
+        />
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/floatingActionButtonsave"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:layout_marginBottom="16dp"
+        android:clickable="true"
+        android:elevation="8dp"
+        android:src="@drawable/menu_save"
+        app:backgroundTint="#FF8300"
+        app:layout_constraintBottom_toTopOf="@id/floatingActionButton"
+        app:layout_constraintEnd_toEndOf="@id/floatingActionButton"
+        android:visibility="invisible"
+        app:tint="#9C000000"
+        />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/floatingActionButtonfav"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:layout_marginBottom="16dp"
+        android:clickable="true"
+        android:elevation="8dp"
+        android:src="@drawable/ic_baseline_bookmark_24"
+        app:backgroundTint="#FF8300"
+        app:tint="#9C000000"
+        app:layout_constraintBottom_toTopOf="@id/floatingActionButtonsave"
+        app:layout_constraintEnd_toEndOf="@id/floatingActionButtonsave"
+        app:maxImageSize="28dp"
+        android:visibility="invisible"/>
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

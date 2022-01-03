@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:context=".Backgroundcolor"
+    >
+
+  <androidx.constraintlayout.widget.ConstraintLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:background="#00FFFFFF"
+      android:padding="16dp"
+      >
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/COLOURcyangreen"
+        android:layout_width="56dp"
+
+        android:layout_height="56dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="24dp"
+        android:background="@drawable/circlecyangreen"
+        app:layout_constraintEnd_toStartOf="@+id/COLOURblue"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_chainStyle="spread"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/COLOURtrans" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/COLOURblue"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="32dp"
+        android:background="@drawable/circleblue"
+        app:layout_constraintEnd_toStartOf="@+id/COLOURpurple"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/COLOURcyangreen"
+        app:layout_constraintTop_toBottomOf="@+id/COLORgray" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/COLOURpurple"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="32dp"
+        android:background="@drawable/circlepurple"
+        app:layout_constraintEnd_toStartOf="@+id/COLOURpink"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/COLOURblue"
+        app:layout_constraintTop_toBottomOf="@+id/COLOURorange" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/COLOURpink"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="32dp"
+        android:background="@drawable/circlepink"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/COLOURpurple"
+        app:layout_constraintTop_toBottomOf="@+id/COLOURyellow" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/COLOURtrans"
+        android:layout_width="56dp"
+
+        android:layout_height="56dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/circletransparent"
+        app:layout_constraintEnd_toStartOf="@+id/COLORgray"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_chainStyle="spread"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/COLOURyellow"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="32dp"
+        android:background="@drawable/circleyellow"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/COLOURorange"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/COLORgray"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="32dp"
+        android:background="@drawable/circlegray"
+        app:layout_constraintEnd_toStartOf="@+id/COLOURorange"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/COLOURtrans"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/COLOURorange"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="32dp"
+        android:background="@drawable/circleorange"
+        app:layout_constraintEnd_toStartOf="@+id/COLOURyellow"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/COLORgray"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/done"
+        style="?attr/materialButtonOutlinedStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="Done"
+        android:textColor="#FF8300"
+        android:textSize="15sp"
+        app:iconTint="#FF8300"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/COLOURblue"
+        app:layout_constraintVertical_bias="1.0"
+        app:strokeColor="#FF8300"
+        app:strokeWidth="0.5dp" />
+
+
+  </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</androidx.appcompat.widget.LinearLayoutCompat>

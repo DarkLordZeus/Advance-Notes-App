@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/homeFragment">
+
+    <fragment
+        android:id="@+id/writingFragment"
+        android:name="com.example.notes.WritingFragment"
+        android:label=" "
+        tools:layout="@layout/fragment_writing" >
+        <action
+            android:id="@+id/action_writingFragment_to_backgroundcolor"
+            app:destination="@id/backgroundcolor" />
+        <argument
+            android:name="NotesEntity"
+            app:argType="com.example.notes.room.NotesEntity"
+            app:nullable="true" />
+        <argument
+            android:name="checkargs"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_writingFragment_to_homeFragment"
+            app:destination="@id/homeFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+    <dialog
+        android:id="@+id/backgroundcolor"
+        android:name="com.example.notes.Backgroundcolor"
+        android:label="fragment_backgroundcolor"
+        tools:layout="@layout/fragment_backgroundcolor"
+        >
+        <action
+            android:id="@+id/action_backgroundcolor_to_writingFragment"
+            app:destination="@id/writingFragment" />
+    </dialog>
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.example.notes.HomeFragment"
+        android:label="NOTES"
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_homeFragment_to_writingFragment"
+            app:destination="@id/writingFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_homeFragment_to_search_fragmnet"
+            app:destination="@id/search_fragmnet" />
+    </fragment>
+    <fragment
+        android:id="@+id/recycleBinFragment"
+        android:name="com.example.notes.RecycleBinFragment"
+        android:label="Recycle Bin"
+        tools:layout="@layout/fragment_recycle_bin" >
+        <action
+            android:id="@+id/action_recycleBinFragment_to_writingFragment"
+            app:destination="@id/writingFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/favourites_fragment"
+        android:name="com.example.notes.Favourites_fragment"
+        android:label="Favourites"
+        tools:layout="@layout/fragment_favourites_fragment" >
+        <action
+            android:id="@+id/action_favourites_fragment_to_writingFragment"
+            app:destination="@id/writingFragment" />
+        <action
+            android:id="@+id/action_favourites_fragment_to_search_fragmnet"
+            app:destination="@id/search_fragmnet" />
+    </fragment>
+    <fragment
+        android:id="@+id/search_fragmnet"
+        android:name="com.example.notes.Search_fragmnet"
+        android:label="fragment_search_fragmnet"
+        tools:layout="@layout/fragment_search_fragment" >
+        <action
+            android:id="@+id/action_search_fragmnet_to_writingFragment"
+            app:destination="@id/writingFragment" />
+    </fragment>
+</navigation>

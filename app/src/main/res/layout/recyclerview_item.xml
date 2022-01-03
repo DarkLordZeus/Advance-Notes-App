@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_margin="4dp"
+    android:id="@+id/viewofitem"
+    app:cardCornerRadius="24dp"
+
+    >
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="4dp">
+
+        <TextView
+            android:id="@+id/titlerv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="10dp"
+            android:text="Title"
+            android:textColor="#000000"
+            android:textSize="20sp"
+            app:layout_constraintStart_toEndOf="@id/rvitemselect"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/daterv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:text="13 DEC 2021"
+            android:textSize="10sp"
+            app:layout_constraintStart_toEndOf="@id/rvitemselect"
+            app:layout_constraintTop_toBottomOf="@+id/titlerv" />
+
+        <TextView
+            android:id="@+id/noterv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="12dp"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:text="@string/you_may_have_heard_frequently_that_love_can_make_you_experience_paradise_on_the_earth_indeed_it_is_valid_and_it_relies_upon_us_the_love_resembles_knowledge_you_will_get_a_lot_as_you_share_with_others_humans_as_well_as_animals_need_love_and_care_nature_has_furnished_us_with_numerous_significant_assets_like_water_air_food_therapeutic_plants_fire_fuels_woods_and_trees_and_so_forth_every_one_of_these_assets_helps_us_for_different_purposes_as_a_whole_we_realize_that_our_endurance_will_turn_out_to_be_difficult_or_end_without_them_as_they_serve_us_they_likewise_need_our_adoration_and_service_we_should_love_every_creation_of_god_regardless_of_whether_a_plant_or_a_creature_we_should_treat_them_with_affection_and_attempt_to_secure_them_however_much_as_it_is_possible_to_do_likewise_cherishing_nature_incorporates_keeping_the_air_and_water_clean_planting_numerous_trees_taking_care_of_the_variety_of_animals_treating_harmed_creatures_or_helpless_humans_and_so_on_our_acts_of_love_will_include_a_touch_of_paradise_the_earth_with_the_assistance_of_affection_and_brotherhood_we_can_make_a_decent_bonding_and_a_great_understanding_among_the_individuals_in_our_society"
+            android:textColor="#000000"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/daterv" />
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/rvitemselect"
+            android:minWidth="0dp"
+            android:animateLayoutChanges="true"
+            android:visibility="gone"
+            android:minHeight="0dp"
+            app:layout_constraintBottom_toTopOf="@+id/noterv"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:button="@drawable/checkbox_state"
+            />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>
