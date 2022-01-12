@@ -1,5 +1,6 @@
 package com.example.notes.Util
 
+import android.graphics.Path
 import androidx.lifecycle.MutableLiveData
 import com.example.notes.R
 import com.example.notes.room.NotesEntity
@@ -10,6 +11,7 @@ class Util {
         var layoutmanager=MutableLiveData<Int>(1)
         var isfav=MutableLiveData<Boolean>(false)
         var listforadapter = MutableLiveData<Int>()
+//        var newdraw = MutableLiveData<Boolean>(false)
         var typeofsort:Int= R.id.datesort
         var ascordec:Int= R.id.ascendingsort
         var deleteinbulk=MutableLiveData<List<NotesEntity>>()

@@ -1,10 +1,11 @@
 package com.example.notes.room
 
+import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import java.io.Serializable
-import java.util.*
+import kotlinx.android.parcel.Parcelize
 
+@kotlinx.parcelize.Parcelize
 @Entity(tableName = "Notes")
 data class NotesEntity(
     @PrimaryKey(autoGenerate = true)
@@ -16,7 +17,7 @@ data class NotesEntity(
     val color:Int,
     val recyclebincount:Int=1,
 
-    ):Serializable
+    ):Parcelable
 
 //recyclebincount 1 == normal saved
 //recyclebincount 2 == favourites

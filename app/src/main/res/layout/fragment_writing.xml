@@ -24,7 +24,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/linearLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -36,35 +36,44 @@
             <EditText
                 android:id="@+id/edittext1"
                 android:layout_width="match_parent"
-                android:layout_height="600dp"
+                android:layout_height="match_parent"
                 android:layout_gravity="top"
+                android:autoLink="web|email"
                 android:background="@color/white"
                 android:gravity="top"
+                android:inputType="textUri|textAutoCorrect|textWebEditText|textMultiLine|text"
+                android:linksClickable="true"
                 android:padding="16dp"
+                android:singleLine="false" />
 
+<!--            <EditText-->
+<!--                android:id="@+id/edittext2"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="600dp"-->
+<!--                android:layout_marginTop="4dp"-->
+<!--                android:background="@color/white"-->
+<!--                android:gravity="top"-->
+<!--                android:padding="16dp" />-->
 
-                />
-
-            <EditText
-                android:id="@+id/edittext2"
+<!--            <EditText-->
+<!--                android:id="@+id/edittext3"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="600dp"-->
+<!--                android:layout_marginTop="4dp"-->
+<!--                android:background="@color/white"-->
+<!--                android:gravity="top"-->
+<!--                android:padding="16dp" />-->
+            <com.example.notes.Util.PaintView
+                android:id="@+id/draw_view"
+                android:visibility="gone"
                 android:layout_width="match_parent"
-                android:layout_height="600dp"
-                android:layout_marginTop="4dp"
-                android:background="@color/white"
-                android:gravity="top"
-                android:padding="16dp" />
-
-            <EditText
-                android:id="@+id/edittext3"
-                android:layout_width="match_parent"
-                android:layout_height="600dp"
-                android:layout_marginTop="4dp"
-                android:background="@color/white"
-                android:gravity="top"
-                android:padding="16dp" />
+                android:layout_height="match_parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
 
 
-        </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </ScrollView>
 
@@ -114,7 +123,20 @@
         app:layout_constraintEnd_toEndOf="@id/floatingActionButtonsave"
         app:maxImageSize="28dp"
         android:visibility="invisible"/>
-
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/floatingActionButtondraw"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:layout_marginBottom="16dp"
+        android:clickable="true"
+        android:elevation="8dp"
+        android:src="@drawable/ic_baseline_brush_24"
+        app:backgroundTint="#FF8300"
+        app:tint="#9C000000"
+        app:layout_constraintBottom_toTopOf="@id/floatingActionButtonfav"
+        app:layout_constraintEnd_toEndOf="@id/floatingActionButtonfav"
+        app:maxImageSize="28dp"
+        android:visibility="invisible"/>
 
 
 

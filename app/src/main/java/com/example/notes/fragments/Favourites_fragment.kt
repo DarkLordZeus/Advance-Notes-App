@@ -1,10 +1,8 @@
 package com.example.notes.fragments
 
 import android.os.Bundle
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -49,7 +47,7 @@ class Favourites_fragment : Fragment() {
         notesadapter.setOnItemClickListener { it->
             val action=
                 com.example.notes.fragments.Favourites_fragmentDirections.actionFavouritesFragmentToWritingFragment(
-                    it,
+                    it.id,
                     1)
             findNavController().navigate(action)
         }
@@ -75,6 +73,10 @@ class Favourites_fragment : Fragment() {
         binding.favrecyclerview.adapter=notesadapter
         binding.favrecyclerview.layoutManager= StaggeredGridLayoutManager(2, LinearLayoutManager.VERTICAL)
 
+    }
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        menu.clear()
+        super.onCreateOptionsMenu(menu, inflater)
     }
     override fun onDestroy() {
         super.onDestroy()

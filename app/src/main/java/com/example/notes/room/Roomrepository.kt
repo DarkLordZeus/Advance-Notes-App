@@ -36,4 +36,8 @@ class Roomrepository(private val NotesDao:NotesDao) {
         return NotesDao.readallsearchnote(string)
     }
 
+    fun notesofthisid(id:Int):NotesEntity
+    {
+        return NotesDao.notesofthisid(id)
+    }
 }

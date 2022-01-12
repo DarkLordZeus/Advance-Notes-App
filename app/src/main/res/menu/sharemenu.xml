@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:title="PDF file"
+        android:id="@+id/shareaspdf"/>
+
+    <item android:title="Note's link"
+        android:id="@+id/shareaslink"/>
+
+    <item android:title="Text file"
+        android:id="@+id/textshare"/>
+</menu>

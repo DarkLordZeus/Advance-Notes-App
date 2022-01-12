@@ -99,14 +99,15 @@ class HomeFragment : Fragment() {
 
         fab.setOnClickListener {
             val action=
-                HomeFragmentDirections.actionHomeFragmentToWritingFragment(null,
+                HomeFragmentDirections.actionHomeFragmentToWritingFragment(0,
                     0)
+
             findNavController().navigate(action)
 
         }
         notesadapter.setOnItemClickListener { it->
             val action=
-                HomeFragmentDirections.actionHomeFragmentToWritingFragment(it, 1)
+                HomeFragmentDirections.actionHomeFragmentToWritingFragment(it.id, 1)
             findNavController().navigate(action)
         }
 

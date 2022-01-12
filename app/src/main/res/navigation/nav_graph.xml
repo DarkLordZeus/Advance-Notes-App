@@ -9,14 +9,13 @@
         android:id="@+id/writingFragment"
         android:name="com.example.notes.fragments.WritingFragment"
         android:label=" "
-        tools:layout="@layout/fragment_writing" >
+        tools:layout="@layout/fragment_writing">
         <action
             android:id="@+id/action_writingFragment_to_backgroundcolor"
             app:destination="@id/backgroundcolor" />
         <argument
-            android:name="NotesEntity"
-            app:argType="com.example.notes.room.NotesEntity"
-            app:nullable="true" />
+            android:name="NotesEntityid"
+            app:argType="integer" />
         <argument
             android:name="checkargs"
             app:argType="integer" />
@@ -27,6 +26,9 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right" />
+        <deepLink
+            android:id="@+id/deepLink"
+            app:uri="www.zeusnotes.com/{NotesEntityid}/{checkargs}" />
     </fragment>
     <dialog
         android:id="@+id/backgroundcolor"

@@ -31,17 +31,24 @@ class Dialogsort(context: Context) : Dialog(context) {
         window?.attributes?.windowAnimations=R.style.DialogAnimation
         editor.putBoolean("bool",false)
         val donebutton=findViewById<Button>(R.id.donesort)
-        val datesort=findViewById<RadioButton>(R.id.datesort)
-        val ascendingsort=findViewById<RadioButton>(R.id.ascendingsort)
         val cancelbutton=findViewById<Button>(R.id.cancelsort)
         val radiogroup1=findViewById<RadioGroup>(R.id.radioGroup)
         val radiogroup2=findViewById<RadioGroup>(R.id.radioGroup2)
-        datesort.isChecked=true
-        ascendingsort.isChecked=true
-        if(sharedPreferences.getBoolean("bool",false)){
-            findViewById<RadioButton>(sharedPreferences.getInt("typeofsort", Util.typeofsort)).isChecked=true
-            findViewById<RadioButton>(sharedPreferences.getInt("orderascordesc", Util.ascordec)).isChecked=true
+
+        when(sharedPreferences.getInt("typeofsort",0)){
+
+
+            1 -> findViewById<RadioButton>(R.id.titlesort).isChecked=true
+            2 -> findViewById<RadioButton>(R.id.datesort).isChecked=true
+            3 -> findViewById<RadioButton>(R.id.titlesort).isChecked=true
+            else -> findViewById<RadioButton>(R.id.datesort).isChecked=true
         }
+        when(sharedPreferences.getInt("orderascordesc",0)){
+            1 -> findViewById<RadioButton>(R.id.ascendingsort).isChecked=true
+            2 -> findViewById<RadioButton>(R.id.descendingsort).isChecked=true
+            else -> findViewById<RadioButton>(R.id.ascendingsort).isChecked=true
+        }
+
 
 
         donebutton.setOnClickListener {
@@ -50,30 +57,36 @@ class Dialogsort(context: Context) : Dialog(context) {
 
             if(ordersort==R.id.ascendingsort)
             {
-                when(typesort)
-                {
-                    R.id.titlesort -> { Util.listforadapter.value=1 }
-                    R.id.datesort ->{
-                        Util.listforadapter.value=2}
-                    R.id.notesizesort ->{
-                        Util.listforadapter.value=3}
-                }
-            }
-            else{
+                editor.putInt("orderascordesc",1)
                 when(typesort)
                 {
                     R.id.titlesort -> {
-                        Util.listforadapter.value=4}
+                        Util.listforadapter.value=1
+                        editor.putInt("typeofsort",1)}
                     R.id.datesort ->{
-                        Util.listforadapter.value=5}
+                        Util.listforadapter.value=2
+                        editor.putInt("typeofsort",2)}
                     R.id.notesizesort ->{
-                        Util.listforadapter.value=6}
+                        Util.listforadapter.value=3
+                        editor.putInt("typeofsort",3)}
                 }
             }
-            editor.putInt("typeofsort",typesort)
-            editor.putInt("orderascordesc",ordersort)
+            else{
+                editor.putInt("orderascordesc",2)
+                when(typesort)
+                {
+                    R.id.titlesort -> {
+                        Util.listforadapter.value=4
+                        editor.putInt("typeofsort",1)}
+                    R.id.datesort ->{
+                        Util.listforadapter.value=5
+                        editor.putInt("typeofsort",2)}
+                    R.id.notesizesort ->{
+                        Util.listforadapter.value=6
+                        editor.putInt("typeofsort",3)}
+                }
+            }
             editor.putInt("listforadapter", Util.listforadapter.value!!)
-            editor.putBoolean("bool",true)
             editor.apply()
 
             dismiss()

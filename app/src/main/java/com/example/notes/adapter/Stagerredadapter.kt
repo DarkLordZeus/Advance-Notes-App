@@ -53,7 +53,9 @@ class Stagerredadapter(val activity: FragmentActivity?, val inrecyclebin: Boolea
             daterv.text=note.datentime
             viewofitem.setCardBackgroundColor(ContextCompat.getColor(holder.itemView.context,note.color))
 
-            }
+        }
+
+
         mAreCheckboxesVisible.observeForever(Observer {
 
 

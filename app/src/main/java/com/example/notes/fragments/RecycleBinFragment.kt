@@ -14,6 +14,7 @@ import com.example.notes.Util.Util
 import com.example.notes.adapter.Stagerredadapter
 import com.example.notes.databinding.FragmentRecycleBinBinding
 import com.example.notes.room.RoomViewmodel
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 class RecycleBinFragment : Fragment() {
     private var _binding: FragmentRecycleBinBinding?=null
@@ -22,6 +23,7 @@ class RecycleBinFragment : Fragment() {
     lateinit var notesadapter: Stagerredadapter
     private lateinit var textview: TextView
     private lateinit var toolbar: com.google.android.material.appbar.CollapsingToolbarLayout
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -47,7 +49,7 @@ class RecycleBinFragment : Fragment() {
         notesadapter.setOnItemClickListener { it->
             val action=
                 RecycleBinFragmentDirections.actionRecycleBinFragmentToWritingFragment(
-                    it,
+                    it.id,
                     2)
             findNavController().navigate(action)
 
@@ -82,13 +84,24 @@ class RecycleBinFragment : Fragment() {
         return when (item.itemId) {
 
             R.id.emptyreccyclebin -> {
-                val list =roommodel.readalldeletednotes.value
-                if (list != null) {
-                    for (i in 0 until list.size) {
-                        val currentnote = list[i]
-                        roommodel.deletenote(currentnote)
+
+                MaterialAlertDialogBuilder(requireContext())
+                    .setTitle("Empty Bin")
+                    .setMessage("Permanently delete all notes?")
+                    .setPositiveButton("YES"){ _, _->
+                        val list =roommodel.readalldeletednotes.value
+                        if (list != null) {
+                            for (i in 0 until list.size) {
+                                val currentnote = list[i]
+                                roommodel.deletenote(currentnote)
+                            }
+                        }
                     }
-                }
+                    .setNegativeButton("NO") { dialog, _ ->
+                        dialog.dismiss()
+                    }
+                    .setCancelable(true)
+                    .show()
 
 
                 return true

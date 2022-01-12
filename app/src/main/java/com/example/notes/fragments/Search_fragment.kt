@@ -87,7 +87,7 @@ class Search_fragmnet : Fragment() {
         }
 
         notesadapter.setOnItemClickListener { it->
-            val action=Search_fragmnetDirections.actionSearchFragmnetToWritingFragment(it,1)
+            val action=Search_fragmnetDirections.actionSearchFragmnetToWritingFragment(it.id,1)
             findNavController().navigate(action)
         }
 

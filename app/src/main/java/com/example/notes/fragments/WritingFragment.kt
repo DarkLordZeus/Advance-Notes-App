@@ -2,13 +2,23 @@ package com.example.notes.fragments
 
 
 import android.annotation.SuppressLint
+import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.Canvas
+import android.graphics.Paint
+import android.graphics.Path
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
+import android.text.util.Linkify
 import android.view.*
+import android.view.ViewTreeObserver.OnGlobalLayoutListener
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.Toast
+import androidx.appcompat.widget.PopupMenu
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -17,8 +27,14 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.notes.R
+import com.example.notes.Util.CreateSaveSharepdf
+
+import com.example.notes.Util.MyMovementMethod
+import com.example.notes.Util.PaintView.Companion.pathList
+
 import com.example.notes.Util.Util
 import com.example.notes.Util.Util.Companion.isfav
+
 import com.example.notes.databinding.FragmentWritingBinding
 import com.example.notes.room.NotesEntity
 import com.example.notes.room.RoomViewmodel
@@ -36,6 +52,13 @@ class WritingFragment : Fragment() {
     private val binding get() = _binding!!
     private val roommodel: RoomViewmodel by viewModels()
     private val args: WritingFragmentArgs by navArgs()
+    private var statecount:Int=1
+    private lateinit var  notebyid:NotesEntity
+    companion object{
+        var path = Path()
+        var paintBrush = Paint()
+    }
+
     private val rotateopen: Animation by lazy {
         AnimationUtils.loadAnimation(requireContext(),
             R.anim.rotate_open)
@@ -71,9 +94,11 @@ class WritingFragment : Fragment() {
 
         _binding = FragmentWritingBinding.inflate(inflater, container, false)
         setHasOptionsMenu(true)
+        notebyid=roommodel.notesofthisid(args.notesEntityid)
         activity!!.findViewById<View>(R.id.floatingActionButton2).visibility=View.GONE
         val appBar = activity!!.findViewById<com.google.android.material.appbar.AppBarLayout>(R.id.appbar)
         appBar.setExpanded(false)
+
         toolbar = activity!!.findViewById<View>(R.id.toolbar) as androidx.appcompat.widget.Toolbar
         textToolHeader = toolbar.findViewById(R.id.toolbartextedit) as EditText
         textToolHeader.visibility = View.VISIBLE
@@ -82,11 +107,12 @@ class WritingFragment : Fragment() {
         if(args.checkargs ==2)
             binding.floatingActionButton.visibility=View.GONE
         if (args.checkargs == 1 || args.checkargs == 2) {
-            setupcolor(args.notesEntity!!.color)
-            Util.colorbg.value = args.notesEntity!!.color
-            textToolHeader.setText(args.notesEntity?.Title)
-            binding.edittext1.setText(args.notesEntity?.notes)
-            if (args.notesEntity!!.recyclebincount == 2) //is already favourite
+
+            setupcolor(notebyid.color)
+            Util.colorbg.value = notebyid.color
+            textToolHeader.setText(notebyid.Title)
+            binding.edittext1.setText(notebyid.notes)
+            if (notebyid.recyclebincount == 2) //is already favourite
             {
                 isfav.value = true
             }
@@ -94,6 +120,7 @@ class WritingFragment : Fragment() {
         return binding.root
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         Util.colorbg.observe(viewLifecycleOwner, Observer { color ->
@@ -110,9 +137,23 @@ class WritingFragment : Fragment() {
                     R.drawable.ic_baseline_bookmark_24))
             }
         })
+        binding.apply {
 
+            edittext1.linksClickable = true
+            edittext1.autoLinkMask = Linkify.WEB_URLS
+            edittext1.setMovementMethod(MyMovementMethod.instance) }
+        Linkify.addLinks(binding.edittext1, Linkify.WEB_URLS)
+        binding.edittext1.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
+            override fun afterTextChanged(s: Editable) {
+                Linkify.addLinks(s, Linkify.WEB_URLS)
+            }
+        })
         binding.floatingActionButton.setOnClickListener {
             showmorefbbuttons()
+
+
         }
 
         binding.floatingActionButtonsave.setOnClickListener {
@@ -122,23 +163,26 @@ class WritingFragment : Fragment() {
         binding.floatingActionButtonfav.setOnClickListener {
             if (args.checkargs == 1) {
                 if (isfav.value == false) {
-                    val note = NotesEntity(args.notesEntity!!.id,
-                        args.notesEntity!!.notes,
-                        args.notesEntity!!.Title,
-                        args.notesEntity!!.description,
-                        args.notesEntity!!.datentime,
-                        args.notesEntity!!.color,
+
+                    val note = NotesEntity(notebyid.id,
+                        notebyid.notes,
+                        notebyid.Title,
+                        notebyid.description,
+                        notebyid.datentime,
+                        notebyid.color,
                         2)
                     roommodel.updatenote(note)
+                    statecount=2
                 } else {
-                    val note = NotesEntity(args.notesEntity!!.id,
-                        args.notesEntity!!.notes,
-                        args.notesEntity!!.Title,
-                        args.notesEntity!!.description,
-                        args.notesEntity!!.datentime,
-                        args.notesEntity!!.color,
+                    val note = NotesEntity(notebyid.id,
+                        notebyid.notes,
+                        notebyid.Title,
+                        notebyid.description,
+                        notebyid.datentime,
+                        notebyid.color,
                         1)
                     roommodel.updatenote(note)
+                    statecount=1
                 }
                 isfav.value = !isfav.value!!
 
@@ -152,37 +196,43 @@ class WritingFragment : Fragment() {
                 ) {
                     Toast.makeText(requireContext(), "Note is empty", Toast.LENGTH_SHORT).show()
                 } else {
-                    if(newnote==false){
-                        val note = NotesEntity(0,
-                            notedescription,
-                            texttitle,
-                            description,
-                            datentime,
-                            Util.colorbg.value!!,2)
-                        roommodel.addnote(note)
-                        newnote=true
-                    }
-                    else{
-                        val lsnote = roommodel.latestsavednote()
-                        val note = NotesEntity(lsnote.id,
-                            notedescription,
-                            texttitle,
-                            description,
-                            datentime,
-                            Util.colorbg.value!!,if (isfav.value == true) 1 else 2)
+
+                    val lsnote = roommodel.latestsavednote()
+                    val note = NotesEntity(lsnote.id,
+                        notedescription,
+                        texttitle,
+                        description,
+                        datentime,
+                        Util.colorbg.value!!,if (isfav.value == true) 1 else 2)
                         roommodel.updatenote(note)
                     }
-
+                if (isfav.value == true) 2 else 1
 
                     isfav.value = !isfav.value!!
 
-                }
+
             }
             setupfavtoasts()
+        }
+        binding.floatingActionButtondraw.setOnClickListener{
+            binding.drawView.visibility=View.VISIBLE
+
+
         }
 
     }
 
+    private fun convertViewToDrawable(view: View): Bitmap {
+        val spec = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED)
+        view.measure(spec, spec)
+        view.layout(0, 0, 500, 500)
+        val b = Bitmap.createBitmap(view.measuredWidth, view.measuredHeight,
+            Bitmap.Config.ARGB_8888)
+        val c = Canvas(b)
+        c.translate((-view.scrollX).toFloat(), (-view.scrollY).toFloat())
+        view.draw(c)
+        return b
+    }
 
     private fun showmorefbbuttons() {
         setVisibility(clicked)
@@ -194,9 +244,11 @@ class WritingFragment : Fragment() {
         if (!clicked) {
             binding.floatingActionButtonsave.visibility = View.VISIBLE
             binding.floatingActionButtonfav.visibility = View.VISIBLE
+            binding.floatingActionButtondraw.visibility = View.VISIBLE
         } else {
             binding.floatingActionButtonsave.visibility = View.INVISIBLE
             binding.floatingActionButtonfav.visibility = View.INVISIBLE
+            binding.floatingActionButtondraw.visibility = View.INVISIBLE
         }
     }
 
@@ -204,10 +256,12 @@ class WritingFragment : Fragment() {
         if (!clicked) {
             binding.floatingActionButtonsave.startAnimation(fromBottom)
             binding.floatingActionButtonfav.startAnimation(fromBottom)
+            binding.floatingActionButtondraw.startAnimation(fromBottom)
             binding.floatingActionButton.startAnimation(rotateopen)
         } else {
             binding.floatingActionButtonsave.startAnimation(toBottom)
             binding.floatingActionButtonfav.startAnimation(toBottom)
+            binding.floatingActionButtondraw.startAnimation(toBottom)
             binding.floatingActionButton.startAnimation(rotateclose)
         }
 
@@ -243,35 +297,51 @@ class WritingFragment : Fragment() {
             }
 
             R.id.restorefromtrash -> {
-                val note = NotesEntity(args.notesEntity!!.id,
-                    args.notesEntity!!.notes,
-                    args.notesEntity!!.Title,
-                    args.notesEntity!!.description,
-                    args.notesEntity!!.datentime,
-                    args.notesEntity!!.color,
+                val note = NotesEntity(notebyid.id,
+                    notebyid.notes,
+                    notebyid.Title,
+                    notebyid.description,
+                    notebyid.datentime,
+                    notebyid.color,
                     1)
                 roommodel.updatenote(note)
+                statecount=0
                 findNavController().popBackStack()
                 return true
             }
             R.id.delete -> {
                 lifecycleScope.launch {
                     if (args.checkargs == 1) {
-                        val note = NotesEntity(args.notesEntity!!.id,
-                            args.notesEntity!!.notes,
-                            args.notesEntity!!.Title,
-                            args.notesEntity!!.description,
-                            args.notesEntity!!.datentime,
-                            args.notesEntity!!.color,
+                        val note = NotesEntity(notebyid.id,
+                            notebyid.notes,
+                            notebyid.Title,
+                            notebyid.description,
+                            notebyid.datentime,
+                            notebyid.color,
                             0)
                         roommodel.updatenote(note)
                         Toast.makeText(requireContext(),
                             "Note moved to RecycleBin!",
                             Toast.LENGTH_SHORT).show()
                     } else if (args.checkargs == 2) {
-                        roommodel.deletenote(args.notesEntity!!)
+                        roommodel.deletenote(notebyid)
                         Toast.makeText(requireContext(), "Note Deleted", Toast.LENGTH_SHORT).show()
-                    } else {
+                    }
+                    else if(newnote){
+                        val texttitle: String = textToolHeader.text.toString()
+                        val notedescription: String = binding.edittext1.text.toString()
+                        val description: String = descriptionstring(notedescription)
+                        val datentime = setupdatentime()
+                        val lsnote = roommodel.latestsavednote()
+                        val note = NotesEntity(lsnote.id,
+                            notedescription,
+                            texttitle,
+                            description,
+                            datentime,
+                            Util.colorbg.value!!,0)
+                        roommodel.updatenote(note)
+                    }
+                    else {
                         textToolHeader.text.clear()
                         binding.edittext1.text.clear()
                         delay(10L)
@@ -279,6 +349,7 @@ class WritingFragment : Fragment() {
                             "Deleted Successfully!",
                             Toast.LENGTH_SHORT).show()
                     }
+                    statecount=0
                     findNavController().popBackStack()
 
                 }
@@ -302,14 +373,56 @@ class WritingFragment : Fragment() {
                 return true
             }
 
+            R.id.Share->{
+                sharemenu()
+                return true
+            }
+            R.id.saveaspdf ->{
+                CreateSaveSharepdf(requireContext(),true).createPdf(textToolHeader.text.toString(),binding.edittext1.text.toString())
+                return true
+            }
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+
+
+
+
+    private fun sharemenu() {
+        val popupMenu: PopupMenu = PopupMenu(requireContext(),activity!!.findViewById(R.id.overflowActionButton))
+        popupMenu.menuInflater.inflate(R.menu.sharemenu,popupMenu.menu)
+        popupMenu.setOnMenuItemClickListener(PopupMenu.OnMenuItemClickListener { item ->
+            when(item.itemId) {
+                R.id.shareaspdf -> {
+                    CreateSaveSharepdf(requireContext(),false).createPdf(textToolHeader.text.toString(),binding.edittext1.text.toString())
+                }
+                R.id.shareaslink -> {
+                    val shareIntent=Intent().apply() {
+                        this.action = Intent.ACTION_SEND
+                        this.putExtra(Intent.EXTRA_TEXT, "www.zeusnotes.com/${args.notesEntityid}/${args.checkargs}")
+                        this.type = "text/plain/url"
+                    }
+                    startActivity(shareIntent)
+                }
+                R.id.textshare ->{
+                    val shareIntent=Intent().apply() {
+                        this.action = Intent.ACTION_SEND
+                        this.putExtra(Intent.EXTRA_TEXT, "${notebyid.notes}")
+                        this.type = "text/plain/url"
+                    }
+                    startActivity(shareIntent)
+                }
+            }
+            true
+        })
+        popupMenu.show()
     }
 
     override fun onDestroy() {
         super.onDestroy()
         popingwritingfrag()
-
+        _binding = null
     }
 
     @SuppressLint("SimpleDateFormat")
@@ -326,7 +439,7 @@ class WritingFragment : Fragment() {
         ) {
 
             if (args.checkargs == 1) {
-                roommodel.deletenote(args.notesEntity!!)
+                roommodel.deletenote(notebyid)
                 Toast.makeText(requireContext(),
                     "Nothing to Save.Note Discarted!",
                     Toast.LENGTH_SHORT).show()
@@ -339,13 +452,13 @@ class WritingFragment : Fragment() {
             val datentime = setupdatentime()
             when {
                 args.checkargs == 1 -> {
-                    val note = NotesEntity(args.notesEntity!!.id,
+                    val note = NotesEntity(notebyid.id,
                         notedescription,
                         texttitle,
                         description,
                         datentime,
                         Util.colorbg.value!!,
-                        args.notesEntity!!.recyclebincount)
+                        statecount)
                     roommodel.updatenote(note)
                 }
                 newnote -> {
@@ -356,10 +469,11 @@ class WritingFragment : Fragment() {
                         texttitle,
                         description,
                         datentime,
-                        Util.colorbg.value!!,lsnote.recyclebincount)
-                    roommodel.addnote(note)
+                        Util.colorbg.value!!,if(statecount!=0) lsnote.recyclebincount else 0)
+                    roommodel.updatenote(note)
                 }
                 else -> {
+                    newnote=true
                     val note = NotesEntity(0,
                         notedescription,
                         texttitle,
@@ -377,8 +491,8 @@ class WritingFragment : Fragment() {
         toolbar.setBackgroundResource(color)
         textToolHeader.setBackgroundResource(color)
         binding.edittext1.setBackgroundResource(color)
-        binding.edittext2.setBackgroundResource(color)
-        binding.edittext3.setBackgroundResource(color)
+        //binding.edittext2.setBackgroundResource(color)
+        //binding.edittext3.setBackgroundResource(color)
         activity?.window?.statusBarColor = ContextCompat.getColor(requireContext(), color)
     }
 
@@ -390,16 +504,16 @@ class WritingFragment : Fragment() {
                 isFocusableInTouchMode = boolean
                 isCursorVisible = boolean
             }
-            edittext2.apply {
-                isFocusable = boolean
-                isFocusableInTouchMode = boolean
-                isCursorVisible = boolean
-            }
-            edittext3.apply {
-                isFocusable = boolean
-                isFocusableInTouchMode = boolean
-                isCursorVisible = boolean
-            }
+//            edittext2.apply {
+//                isFocusable = boolean
+//                isFocusableInTouchMode = boolean
+//                isCursorVisible = boolean
+//            }
+//            edittext3.apply {
+//                isFocusable = boolean
+//                isFocusableInTouchMode = boolean
+//                isCursorVisible = boolean
+       //     }
             textToolHeader.apply {
                 isFocusable = boolean
                 isFocusableInTouchMode = boolean
@@ -415,9 +529,11 @@ class WritingFragment : Fragment() {
     }
 
     private fun popingwritingfrag() {
-        if (args.checkargs != 2) {
+        if (args.checkargs != 2 || statecount!=0) {
             addnote()
         }
+
+        pathList.clear()
         toolbar.setBackgroundResource(R.color.toolbargray)
         activity?.window?.statusBarColor =
             ContextCompat.getColor(requireContext(), R.color.toolbargray)
@@ -425,8 +541,7 @@ class WritingFragment : Fragment() {
         textToolHeader.visibility = View.GONE
         Util.colorbg.value = R.color.bgtransparent
         applyreadmode(true)
-        isfav.value = false
-        _binding = null
+        isfav.value = false 
     }
 
 
