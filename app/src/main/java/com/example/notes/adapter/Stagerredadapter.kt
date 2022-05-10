@@ -166,7 +166,7 @@ class Stagerredadapter(val activity: FragmentActivity?, val inrecyclebin: Boolea
             selected.value=0
         }
     }
-
+   //the item clicked will be chcked not any random
     override fun getItemViewType(position: Int): Int {
         return position
     }
